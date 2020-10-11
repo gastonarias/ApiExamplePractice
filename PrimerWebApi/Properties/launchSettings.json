@@ -19,7 +19,6 @@
     },
     "PrimerWebApi": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "autores",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

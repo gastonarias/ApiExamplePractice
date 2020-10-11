@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiExamplePractice.Helpers.Filter;
+using ApiExamplePractice.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +24,7 @@ namespace PrimerWebApi
 {
     public class Startup
     {
-        private ILoggerFactory loggerFactory;
+        //private ILoggerFactory loggerFactory;
 
         public Startup(IConfiguration configuration)
         {
@@ -34,16 +36,23 @@ namespace PrimerWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
+            services.AddTransient<IHostedService, WriteFileTestIHostedService>();
+
+            services.AddScoped<FilterAction>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
             services.AddResponseCaching();
             services.AddTransient<ClaseB>();
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-                   .UseLoggerFactory(ApplicationDbContext.loggerFactory));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                   //.UseLoggerFactory(ApplicationDbContext.loggerFactory));
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddMvc(options => {
+                options.Filters.Add(new CustomFilterException());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +76,7 @@ namespace PrimerWebApi
                 endpoints.MapControllers();
             });
 
-            loggerFactory.AddProvider(new LoggerProvider());
+            //loggerFactory.AddProvider(new LoggerProvider());
         }
     }
 }

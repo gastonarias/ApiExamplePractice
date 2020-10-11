@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiExamplePractice.Helpers.Filter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -28,6 +29,7 @@ namespace PrimerWebApi.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(FilterAction))]
         public ActionResult<IEnumerable<Autor>> Get()
         {
             claseB.HacerAlgo();

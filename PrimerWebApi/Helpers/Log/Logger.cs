@@ -34,7 +34,7 @@ namespace PrimerWebApi.Helpers.Log
                 exception = exception
             });
 
-            File.AppendAllText(@"C:\temp\log.txt", json);
+            //File.AppendAllText(@"C:\temp\log.txt", json);
         }
     }
 }
