@@ -34,6 +34,9 @@ namespace PrimerWebApi.Controllers
         {
             claseB.HacerAlgo();
             logger.LogInformation("Logger info en autores");
+
+            //throw new ApplicationException();
+
             return context.Autores.Include(x => x.Libros).ToList();
         }
 
