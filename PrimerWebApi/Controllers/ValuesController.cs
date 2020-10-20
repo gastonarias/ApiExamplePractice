@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace PrimerWebApi.Controllers
 {
@@ -12,12 +13,21 @@ namespace PrimerWebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        [Authorize]
+        private readonly IConfiguration configuration;
+
+        public ValuesController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
+
+        //[Authorize]
         [ResponseCache(Duration = 10)]
         [HttpGet]
         public ActionResult<string> Get()
         {
-            return DateTime.Now.Second.ToString();
+            return configuration["clave"];
+            //return DateTime.Now.Second.ToString();
         }
     }
 

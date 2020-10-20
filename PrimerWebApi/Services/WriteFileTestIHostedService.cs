@@ -31,7 +31,7 @@ namespace ApiExamplePractice.Services
         {
             WriteToFile("StartAsync");
 
-            timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(100));
 
             return Task.CompletedTask;
         }

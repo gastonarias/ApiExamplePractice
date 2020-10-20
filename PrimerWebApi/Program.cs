@@ -18,6 +18,19 @@ namespace PrimerWebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((env, config) =>
+                {
+                    var ambiente = env.HostingEnvironment.EnvironmentName;
+                    config.AddJsonFile($"appsettings.{ambiente}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true);
+                    config.AddEnvironmentVariables();
+
+                    if (args != null)
+                    {
+                        config.AddCommandLine(args);
+                    }
+
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
